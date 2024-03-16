@@ -4,7 +4,6 @@ import { v4 as uuidv4 } from 'uuid';
 
 export const useTaskStore = defineStore('task', () => {
   const taskLists = reactive([
-    { id:1, title: "Not started", taskList: reactive([{id:1, task:"faire à manger"}, {id:2, task:"coder"}, {id:3, task:"dormir"}]) }
   ]);
 
   const addTaskList = (newList) => {
@@ -16,7 +15,9 @@ export const useTaskStore = defineStore('task', () => {
           title: newList.title,
           taskList: []
         }
-        taskLists.push(list);
+        if(newList.title) {
+          taskLists.push(list);
+        }
       } else {
         console.log("already exists");
       };
@@ -37,7 +38,9 @@ export const useTaskStore = defineStore('task', () => {
       const taskList = taskLists.find(el => el.id === id).taskList; 
       if(taskList) {
         const newTask = {id: uuidv4(), task}
-        taskList.push(newTask);
+        if(task) {
+          taskList.push(newTask);
+        }
       }
     }
   }
